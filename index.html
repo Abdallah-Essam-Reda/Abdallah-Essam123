@@ -1,0 +1,2116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الحلول المتطورة Ultra Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Tajawal', Arial, sans-serif;
+        }
+        
+        body {
+            direction: rtl;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .ocean-bg {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7ec8e3 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .solution-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-right: 4px solid #667eea;
+        }
+        
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header-shadow {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .problem-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .solution-list {
+            counter-reset: solution-counter;
+        }
+        
+        .solution-item {
+            counter-increment: solution-counter;
+        }
+        
+        .solution-item::before {
+            content: counter(solution-counter);
+        }
+        
+        .video-link {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .article-link {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .success-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        // البيانات الرئيسية للمشاكل والحلول
+        const problems = [
+            {
+                id: 1,
+                title: "الأرق واضطرابات النوم",
+                icon: "fa-moon",
+                color: "bg-indigo-500",
+                description: "صعوبة في النوم أو عدم القدرة على الحصول على نوم هادئ"
+            },
+            {
+                id: 2,
+                title: "التوتر والقلق",
+                icon: "fa-heart-pulse",
+                color: "bg-red-500",
+                description: "الشعور بالقلق المستمر والتوتر اليومي"
+            },
+            {
+                id: 3,
+                title: "الصداع المستمر",
+                icon: "fa-head-side-virus",
+                color: "bg-orange-500",
+                description: "الآلام المتكررة في الرأس والصداع النصفي"
+            },
+            {
+                id: 4,
+                title: "مشاكل الوزن الزائد",
+                icon: "fa-weight-scale",
+                color: "bg-yellow-500",
+                description: "زيادة الوزن والسمنة وعدم القدرة على خسارة الوزن"
+            },
+            {
+                id: 5,
+                title: "الإرهاق والتعب المستمر",
+                icon: "fa-battery-empty",
+                color: "bg-gray-500",
+                description: "الشعور بالإرهاق والإجهاد البدني المستمر"
+            },
+            {
+                id: 6,
+                title: "آلام الظهر والرقبة",
+                icon: "fa-spine",
+                color: "bg-cyan-600",
+                description: "آلام مزمنة في منطقة الظهر والرقبة"
+            },
+            {
+                id: 7,
+                title: "مشاكل البشرة والحب",
+                icon: "fa-face-smile",
+                color: "bg-pink-500",
+                description: "ظهور حب الشباب والمشاكل الجلدية"
+            },
+            {
+                id: 8,
+                title: "ضعف المناعة",
+                icon: "fa-shield",
+                color: "bg-green-500",
+                description: "الإصابة المتكررة بالأمراض والعدوى"
+            },
+            {
+                id: 9,
+                title: "مشاكل الجهاز الهضمي",
+                icon: "fa-stomach",
+                color: "bg-amber-600",
+                description: "الإمساك والإسهال وعسر الهضم"
+            },
+            {
+                id: 10,
+                title: "ارتفاع ضغط الدم",
+                icon: "fa-syringe",
+                color: "bg-rose-600",
+                description: "ارتفاع ضغط الدم ومضاعفاته"
+            },
+            {
+                id: 11,
+                title: "مشاكل الذاكرة والتركيز",
+                icon: "fa-brain",
+                color: "bg-violet-600",
+                description: "ضعف الذاكرة وعدم القدرة على التركيز"
+            },
+            {
+                id: 12,
+                title: "الإدمان والعادات السيئة",
+                icon: "fa-triangle-exclamation",
+                color: "bg-red-600",
+                description: "الإدمان على المواد أو السلوكيات الضارة"
+            },
+            {
+                id: 13,
+                title: "الاكتئاب والحزن المستمر",
+                icon: "fa-cloud-rain",
+                color: "bg-slate-600",
+                description: "الشعور بالاكتئاب والحزن والإحباط المستمر"
+            },
+            {
+                id: 14,
+                title: "مشاكل العمل والضغط الوظيفي",
+                icon: "fa-briefcase",
+                color: "bg-blue-600",
+                description: "الضغط النفسي في مكان العمل والإرهاق الوظيفي"
+            },
+            {
+                id: 15,
+                title: "الخجل والخوف الاجتماعي",
+                icon: "fa-person-hiking",
+                color: "bg-teal-500",
+                description: "الخوف من التفاعل الاجتماعي والخجل المفرط"
+            },
+            {
+                id: 16,
+                title: "مشاكل العلاقات الشخصية",
+                icon: "fa-handshake",
+                color: "bg-fuchsia-500",
+                description: "الخلافات والصراعات في العلاقات"
+            },
+            {
+                id: 17,
+                title: "قلة المعرفة والتعليم",
+                icon: "fa-graduation-cap",
+                color: "bg-lime-600",
+                description: "نقص المعرفة والمهارات التعليمية"
+            },
+            {
+                id: 18,
+                title: "مشاكل مالية واقتصادية",
+                icon: "fa-coins",
+                color: "bg-yellow-600",
+                description: "الديون والمشاكل المالية والفقر"
+            },
+            {
+                id: 19,
+                title: "إدارة الوقت والتأخر",
+                icon: "fa-hourglass-end",
+                color: "bg-orange-600",
+                description: "عدم القدرة على إدارة الوقت والتأخر المستمر"
+            },
+            {
+                id: 20,
+                title: "الإدمان على وسائل التواصل",
+                icon: "fa-mobile",
+                color: "bg-sky-600",
+                description: "الإدمان على الهاتف والإنترنت"
+            }
+        ];
+
+        const solutions = {
+            1: {
+                title: "الأرق واضطرابات النوم",
+                solutions: [
+                    {
+                        title: "تنظيم ساعة النوم البيولوجية",
+                        description: "تثبيت أوقات نوم واستيقاظ منتظمة يساعد الجسم على التأقلم",
+                        steps: [
+                            "حدد وقت نوم موحد كل يوم",
+                            "حدد وقت استيقاظ موحد حتى في العطل",
+                            "اتبع هذا النمط لمدة 3 أسابيع على الأقل",
+                            "تجنب النوم في ساعات غير المعتادة"
+                        ],
+                        examples: "إذا كنت تنام الساعة 10 مساءً، استيقظ في 6 صباحاً يومياً",
+                        tools: "تطبيق Sleep Cycle، تطبيق Calm",
+                        tips: "لا تستخدم الهاتف قبل النوم بساعة",
+                        videos: "https://www.youtube.com/results?search_query=تنظيم+ساعة+النوم+البيولوجية",
+                        articles: "https://www.webteb.com"
+                    },
+                    {
+                        title: "تقليل الكافيين والمنبهات",
+                        description: "الكافيين يؤثر على الجهاز العصبي ويسبب الأرق",
+                        steps: [
+                            "تجنب القهوة بعد الساعة 2 مساءً",
+                            "قلل تدريجياً من كمية الكافيين",
+                            "استبدل القهوة بالشاي الأخضر أو الماء",
+                            "تجنب المشروبات الغازية"
+                        ],
+                        examples: "الشاي والقهوة والشوكولاتة تحتوي على كافيين",
+                        tools: "تطبيق Track your coffee intake",
+                        tips: "نصف كوب قهوة يحتاج 5-6 ساعات ليتم استقلابه",
+                        videos: "https://www.youtube.com/results?search_query=تأثير+الكافيين+على+النوم",
+                        articles: "https://www.altibbi.com"
+                    },
+                    {
+                        title: "ممارسة الاسترخاء العميق",
+                        description: "تقنيات التنفس والاسترخاء تهدئ الجهاز العصبي",
+                        steps: [
+                            "اجلس بوضعية مريحة",
+                            "خذ نفساً عميقاً من الأنف لمدة 4 ثوانٍ",
+                            "احبس النفس 4 ثوانٍ",
+                            "أطلق النفس ببطء لمدة 4 ثوانٍ",
+                            "كرر 10 مرات"
+                        ],
+                        examples: "تقنية 4-4-4 للتنفس، استرخاء العضلات التدريجي",
+                        tools: "تطبيق Headspace، تطبيق Breathwrk",
+                        tips: "مارس قبل النوم بـ 15 دقيقة",
+                        videos: "https://www.youtube.com/results?search_query=تقنيات+التنفس+للاسترخاء",
+                        articles: "https://www.healthline.com"
+                    },
+                    {
+                        title: "تحسين بيئة النوم",
+                        description: "غرفة النوم الهادئة والمظلمة تعزز النوم العميق",
+                        steps: [
+                            "اجعل الغرفة مظلمة تماماً",
+                            "قلل الضوضاء والأصوات",
+                            "حافظ على درجة حرارة باردة (18-20 درجة)",
+                            "استخدم وسائد وأغطية مريحة"
+                        ],
+                        examples: "ستائر معتمة، سدادات أذن، مرطب الهواء",
+                        tools: "تطبيق White noise، مراوح صامتة",
+                        tips: "الغرفة الباردة تعزز النوم الطبيعي",
+                        videos: "https://www.youtube.com/results?search_query=بيئة+النوم+المثالية",
+                        articles: "https://www.ncbi.nlm.nih.gov"
+                    },
+                    {
+                        title: "تجنب الشاشات قبل النوم",
+                        description: "الضوء الأزرق من الشاشات يثبط إفراز الميلاتونين",
+                        steps: [
+                            "توقف عن استخدام الهاتف قبل 30-60 دقيقة",
+                            "توقف عن مشاهدة التلفاز قبل النوم",
+                            "استخدم نظارات واقية من الضوء الأزرق إن أمكن",
+                            "استبدل وقت الشاشة بالقراءة"
+                        ],
+                        examples: "اقرأ كتاباً بدلاً من الهاتف",
+                        tools: "تطبيق f.lux، نظارات ضد الضوء الأزرق",
+                        tips: "الضوء الأزرق يقلل الميلاتونين بنسبة 55%",
+                        videos: "https://www.youtube.com/results?search_query=الضوء+الأزرق+والنوم",
+                        articles: "https://www.sleepfoundation.org"
+                    }
+                ]
+            },
+            2: {
+                title: "التوتر والقلق",
+                solutions: [
+                    {
+                        title: "اليقظة الذهنية (Mindfulness)",
+                        description: "تركيز الانتباه على اللحظة الحالية يقلل القلق",
+                        steps: [
+                            "اجلس في مكان هادئ",
+                            "ركز على تنفسك الطبيعي",
+                            "لاحظ أي أفكار بدون الحكم عليها",
+                            "مارس لمدة 10-20 دقيقة يومياً"
+                        ],
+                        examples: "التأمل الموجه، المشي الواعي",
+                        tools: "تطبيق Insight Timer، تطبيق Calm",
+                        tips: "ابدأ بـ 5 دقائق ثم زد تدريجياً",
+                        videos: "https://www.youtube.com/results?search_query=اليقظة+الذهنية+للقلق",
+                        articles: "https://www.verywell.com"
+                    },
+                    {
+                        title: "ممارسة الرياضة البدنية",
+                        description: "التمارين تحرر الإندورفين وتقلل الكورتيزول",
+                        steps: [
+                            "اختر رياضة تستمتع بها",
+                            "مارس 30 دقيقة يومياً",
+                            "ابدأ بالمشي السريع أو السباحة",
+                            "زد الشدة تدريجياً"
+                        ],
+                        examples: "الجري، اليوجا، السباحة، كرة القدم",
+                        tools: "تطبيق Strava، تطبيق Nike Training Club",
+                        tips: "أفضل وقت للرياضة في الصباح",
+                        videos: "https://www.youtube.com/results?search_query=تمارين+لتخفيف+القلق",
+                        articles: "https://www.mayoclinic.org"
+                    },
+                    {
+                        title: "العلاج السلوكي المعرفي (CBT)",
+                        description: "تغيير الأفكار السلبية يقلل القلق",
+                        steps: [
+                            "حدد الأفكار السلبية",
+                            "تحقق من صحتها بالبيانات",
+                            "استبدلها بأفكار إيجابية واقعية",
+                            "مارس التفكير الإيجابي يومياً"
+                        ],
+                        examples: "بدلاً من 'سأفشل' قل 'سأحاول وسأتعلم'",
+                        tools: "تطبيق Sanvello، كتاب CBT",
+                        tips: "اكتب أفكارك لفهمها بشكل أفضل",
+                        videos: "https://www.youtube.com/results?search_query=العلاج+السلوكي+المعرفي",
+                        articles: "https://www.apa.org"
+                    },
+                    {
+                        title: "تحديد مصادر التوتر والتخطيط",
+                        description: "معرفة المشاكل تساعد على حلها",
+                        steps: [
+                            "اكتب مصادر التوتر",
+                            "صنفها حسب الأهمية",
+                            "خطط لحل كل مشكلة",
+                            "خذ إجراءات صغيرة يومياً"
+                        ],
+                        examples: "إذا كان الضغط من العمل، خطط يومياً",
+                        tools: "تطبيق Todoist، دفتر يوميات",
+                        tips: "التخطيط يقلل القلق بـ 40%",
+                        videos: "https://www.youtube.com/results?search_query=إدارة+التوتر",
+                        articles: "https://www.stress.org"
+                    },
+                    {
+                        title: "دعم اجتماعي والحديث عن المشاعر",
+                        description: "مشاركة المشاعر مع الآخرين تخفف الضغط",
+                        steps: [
+                            "تحدث مع صديق أو عائلة",
+                            "لا تخجل من مشاعرك",
+                            "استمع للآخرين أيضاً",
+                            "ابحث عن مجموعات دعم إن لزم"
+                        ],
+                        examples: "جلسة صريحة مع صديق، مجموعات دعم",
+                        tools: "تطبيق BetterHelp، منتديات الدعم",
+                        tips: "الحديث يقلل الشعور بالوحدة",
+                        videos: "https://www.youtube.com/results?search_query=الدعم+الاجتماعي+والقلق",
+                        articles: "https://www.psychologytoday.com"
+                    }
+                ]
+            },
+            3: {
+                title: "الصداع المستمر",
+                solutions: [
+                    {
+                        title: "الترطيب والشرب بكثرة",
+                        description: "الجفاف يسبب 30% من حالات الصداع",
+                        steps: [
+                            "اشرب 8 أكواب ماء يومياً على الأقل",
+                            "اشرب ماء قبل الشعور بالعطش",
+                            "تجنب المشروبات التي تسبب الجفاف",
+                            "راقب لون البول (يجب أن يكون شفاف)"
+                        ],
+                        examples: "احمل زجاجة ماء معك طوال اليوم",
+                        tools: "تطبيق WaterMinder، تطبيق Plant Nanny",
+                        tips: "شرب الماء البارد يقلل الصداع سريعاً",
+                        videos: "https://www.youtube.com/results?search_query=الترطيب+والصداع",
+                        articles: "https://www.headaches.org"
+                    },
+                    {
+                        title: "تحسين وضعية الجسم",
+                        description: "الوضعية السيئة تسبب صداع في الرقبة والرأس",
+                        steps: [
+                            "اجلس بشكل مستقيم",
+                            "اجعل الشاشة في مستوى العين",
+                            "لا تنحنِ لأسفل على الهاتف",
+                            "خذ فترات راحة كل 30 دقيقة"
+                        ],
+                        examples: "رفع شاشة الكمبيوتر بـ 15-20 سم",
+                        tools: "حامل الهاتف، وسادة دعم الرقبة",
+                        tips: "الوضعية السيئة تسبب صداع مزمن",
+                        videos: "https://www.youtube.com/results?search_query=وضعية+الجسم+والصداع",
+                        articles: "https://www.spine-health.com"
+                    },
+                    {
+                        title: "إدارة الضغط والتوتر",
+                        description: "التوتر يسبب شد العضلات والصداع",
+                        steps: [
+                            "مارس تمارين الاسترخاء",
+                            "خذ فترات راحة منتظمة",
+                            "مارس اليوجا أو التأمل",
+                            "تجنب المواقف المجهدة"
+                        ],
+                        examples: "جلسة يوجا 15 دقيقة تقلل الصداع",
+                        tools: "تطبيق Calm، تطبيق Headspace",
+                        tips: "التوتر يسبب 70% من الصداع",
+                        videos: "https://www.youtube.com/results?search_query=إدارة+التوتر+لتخفيف+الصداع",
+                        articles: "https://www.migraine.com"
+                    },
+                    {
+                        title: "تجنب المحفزات والعادات السيئة",
+                        description: "بعض الأشياء تحفز الصداع",
+                        steps: [
+                            "حدد محفزات الصداع الخاصة بك",
+                            "تجنب الأطعمة المحفزة",
+                            "قلل المنبهات",
+                            "قم بتطعيمات واقية"
+                        ],
+                        examples: "الشوكولاتة، المعكرونة الغنية، القهوة",
+                        tools: "دفتر تتبع الصداع، تطبيق Migraine Buddy",
+                        tips: "تتبع محفزاتك لمدة شهر",
+                        videos: "https://www.youtube.com/results?search_query=محفزات+الصداع",
+                        articles: "https://www.americanmigrainefoundation.org"
+                    },
+                    {
+                        title: "الحصول على نوم كافٍ",
+                        description: "قلة النوم تسبب صداع متكرر",
+                        steps: [
+                            "نم 7-9 ساعات يومياً",
+                            "حافظ على جدول نوم منتظم",
+                            "تجنب الشاشات قبل النوم",
+                            "اجعل غرفتك باردة ومظلمة"
+                        ],
+                        examples: "النوم المنتظم يقلل الصداع بـ 50%",
+                        tools: "تطبيق Sleep Cycle",
+                        tips: "كل ساعة نوم تقل تساوي 20% تحسن",
+                        videos: "https://www.youtube.com/results?search_query=النوم+والصداع",
+                        articles: "https://www.sleepfoundation.org"
+                    }
+                ]
+            },
+            4: {
+                title: "مشاكل الوزن الزائد",
+                solutions: [
+                    {
+                        title: "حساب السعرات الحرارية والحمية المتوازنة",
+                        description: "فهم السعرات يساعد على خسارة الوزن",
+                        steps: [
+                            "احسب احتياجاتك اليومية من السعرات",
+                            "قلل بـ 500 سعرة يومياً",
+                            "تناول بروتين وخضار وألياف",
+                            "تابع بتطبيق تتبع"
+                        ],
+                        examples: "تناول دجاج مشوي بدلاً من المقلي",
+                        tools: "تطبيق MyFitnessPal، تطبيق Lose It!",
+                        tips: "خسارة آمنة = 0.5-1 كجم أسبوعياً",
+                        videos: "https://www.youtube.com/results?search_query=حساب+السعرات+الحرارية",
+                        articles: "https://www.dietitian.com"
+                    },
+                    {
+                        title: "ممارسة الرياضة والتمارين البدنية",
+                        description: "التمارين تحرق السعرات وتقوي العضلات",
+                        steps: [
+                            "ابدأ بالمشي السريع 30 دقيقة",
+                            "أضف تمارين القوة 3 مرات أسبوعياً",
+                            "زد الشدة تدريجياً",
+                            "التزم بـ 150 دقيقة أسبوعياً"
+                        ],
+                        examples: "المشي + رفع أثقال خفيفة",
+                        tools: "تطبيق Nike Training Club، صالة ألعاب",
+                        tips: "الرياضة تحرق 300-500 سعرة يومياً",
+                        videos: "https://www.youtube.com/results?search_query=تمارين+فقدان+الوزن",
+                        articles: "https://www.fitness.gov"
+                    },
+                    {
+                        title: "التغذية الصحية والأطعمة الغنية بالألياف",
+                        description: "الألياف تشعرك بالشبع",
+                        steps: [
+                            "أكل الخضار والفاكهة يومياً",
+                            "استبدل الحبوب بالحبوب الكاملة",
+                            "أكل المكسرات والبذور",
+                            "قلل السكريات والدهون"
+                        ],
+                        examples: "تفاحة يومياً، عدس مطهو، سلطة",
+                        tools: "تطبيق Nutritionix، كتب الوصفات",
+                        tips: "25-30 جرام ألياف يومياً مثالي",
+                        videos: "https://www.youtube.com/results?search_query=التغذية+الصحية+لفقدان+الوزن",
+                        articles: "https://www.nutrition.gov"
+                    },
+                    {
+                        title: "تقليل حجم الوجبات وعدد مرات الأكل",
+                        description: "وجبات صغيرة متكررة تساعد",
+                        steps: [
+                            "استخدم أطباق أصغر",
+                            "كل ببطء ومضغ جيداً",
+                            "تناول 5-6 وجبات صغيرة",
+                            "لا تأكل أمام الشاشات"
+                        ],
+                        examples: "الوجبة الواحدة = حجم قبضة يد",
+                        tools: "أطباق صغيرة، ملعقة قياس",
+                        tips: "تناول الطعام ببطء = شبع أكثر",
+                        videos: "https://www.youtube.com/results?search_query=حجم+الوجبات+والشبع",
+                        articles: "https://www.healthline.com"
+                    },
+                    {
+                        title: "الحصول على دعم نفسي والمتابعة المنتظمة",
+                        description: "الدعم يزيد الالتزام والنجاح",
+                        steps: [
+                            "انضم لمجموعة دعم",
+                            "ابحث عن صديق للتحدي معه",
+                            "تابع وزنك أسبوعياً",
+                            "احتفل بكل تقدم صغير"
+                        ],
+                        examples: "مجموعات فقدان الوزن، تحديات صديق",
+                        tools: "تطبيق Weight Watchers، مجموعات Facebook",
+                        tips: "الدعم يزيد نسبة النجاح 65%",
+                        videos: "https://www.youtube.com/results?search_query=الدعم+النفسي+لفقدان+الوزن",
+                        articles: "https://www.obesitysociety.org"
+                    }
+                ]
+            },
+            5: {
+                title: "الإرهاق والتعب المستمر",
+                solutions: [
+                    {
+                        title: "الحصول على نوم جودة عالية",
+                        description: "النوم الكافي يعيد طاقة الجسم",
+                        steps: [
+                            "نم 7-9 ساعات كل ليلة",
+                            "اذهب للفراش والاستيقاظ في نفس الوقت",
+                            "تجنب الشاشات قبل الفراش",
+                            "اجعل غرفتك هادئة ومظلمة"
+                        ],
+                        examples: "جدول نوم ثابت حتى في العطل",
+                        tools: "تطبيق Sleep Cycle",
+                        tips: "النوم هو أول علاج للإرهاق",
+                        videos: "https://www.youtube.com/results?search_query=تحسين+جودة+النوم",
+                        articles: "https://www.sleephealth.org"
+                    },
+                    {
+                        title: "التغذية السليمة والوجبات المنتظمة",
+                        description: "الغذاء الصحي يمد الجسم بالطاقة",
+                        steps: [
+                            "تناول وجبة إفطار قوية",
+                            "أكل كل 3-4 ساعات",
+                            "تناول بروتين وكربوهيدرات معقدة",
+                            "تجنب الأطعمة الدهنية الثقيلة"
+                        ],
+                        examples: "إفطار: بيض وخبز أسمر وفاكهة",
+                        tools: "تطبيق MyFitnessPal",
+                        tips: "الإفطار يزيد الطاقة 30%",
+                        videos: "https://www.youtube.com/results?search_query=التغذية+لزيادة+الطاقة",
+                        articles: "https://www.nutrition.org"
+                    },
+                    {
+                        title: "ممارسة الرياضة والنشاط البدني",
+                        description: "النشاط يزيد الطاقة ويحسن اللياقة",
+                        steps: [
+                            "مارس 30 دقيقة نشاط معتدل يومياً",
+                            "ابدأ بالمشي أو السباحة",
+                            "أضف تمارين القوة",
+                            "اختر رياضة تستمتع بها"
+                        ],
+                        examples: "المشي السريع، السباحة، الرقص",
+                        tools: "تطبيق Strava",
+                        tips: "الرياضة تزيد الطاقة بـ 65%",
+                        videos: "https://www.youtube.com/results?search_query=تمارين+لزيادة+الطاقة",
+                        articles: "https://www.exerciseismedicine.org"
+                    },
+                    {
+                        title: "إدارة التوتر والاسترخاء",
+                        description: "التوتر يسبب الإرهاق الشديد",
+                        steps: [
+                            "مارس تمارين التنفس",
+                            "خذ فترات راحة منتظمة",
+                            "مارس اليوجا أو التأمل",
+                            "قضِ وقتاً في الطبيعة"
+                        ],
+                        examples: "15 دقيقة يوجا، 10 دقائق تنفس عميق",
+                        tools: "تطبيق Calm، صفوف يوجا",
+                        tips: "الاسترخاء يقلل الإرهاق 40%",
+                        videos: "https://www.youtube.com/results?search_query=تقليل+الإرهاق",
+                        articles: "https://www.stressmanagementatwork.com"
+                    },
+                    {
+                        title: "فحص طبي والتحقق من الصحة",
+                        description: "بعض الأمراض تسبب إرهاق",
+                        steps: [
+                            "قم بفحص دوري عام",
+                            "تحقق من مستوى الحديد (فقر الدم)",
+                            "افحص الغدة الدرقية",
+                            "استشر طبيب إذا استمر الإرهاق"
+                        ],
+                        examples: "فحص دم شامل، فحص الغدة",
+                        tools: "عيادات طبية معتمدة",
+                        tips: "فقر الدم يسبب 30% من حالات الإرهاق",
+                        videos: "https://www.youtube.com/results?search_query=أسباب+الإرهاق+الطبية",
+                        articles: "https://www.mayoclinic.org"
+                    }
+                ]
+            },
+            6: {
+                title: "آلام الظهر والرقبة",
+                solutions: [
+                    {
+                        title: "تصحيح الوضعية والجلسة الصحيحة",
+                        description: "الوضعية السيئة سبب رئيسي للآلام",
+                        steps: [
+                            "اجلس بشكل مستقيم مع كتفين مسترخيين",
+                            "اجعل الشاشة في مستوى العين",
+                            "اجعل القدمين على الأرض",
+                            "استخدم وسادة دعم قطنية"
+                        ],
+                        examples: "زاوية الفخذ 90 درجة، رقبة محايدة",
+                        tools: "كرسي إرجونوميك، وسادة دعم",
+                        tips: "الوضعية الصحيحة تقلل الألم 70%",
+                        videos: "https://www.youtube.com/results?search_query=الوضعية+الصحيحة+للعمل",
+                        articles: "https://www.spine-health.com"
+                    },
+                    {
+                        title: "تمارين الاستطالة والمرونة",
+                        description: "الاستطالة تحرر التوتر في العضلات",
+                        steps: [
+                            "مارس تمارين استطالة 3 مرات يومياً",
+                            "كل تمرين 30 ثانية",
+                            "لا تجبر نفسك بقوة",
+                            "تنفس ببطء أثناء التمرين"
+                        ],
+                        examples: "استطالة الرقبة، لمس الأصابع، التمدد",
+                        tools: "تطبيق Stretching apps",
+                        tips: "الاستطالة قبل وبعد العمل مهمة",
+                        videos: "https://www.youtube.com/results?search_query=تمارين+الظهر+والرقبة",
+                        articles: "https://www.physionet.org"
+                    },
+                    {
+                        title: "تمارين تقوية العضلات",
+                        description: "عضلات قوية تدعم العمود الفقري",
+                        steps: [
+                            "مارس تمارين القوة 3 مرات أسبوعياً",
+                            "ركز على عضلات الظهر والبطن",
+                            "ابدأ بـ 10 تكرارات",
+                            "زد التكرارات تدريجياً"
+                        ],
+                        examples: "تمارين البلانك، تمارين الظهر",
+                        tools: "تطبيق Nike Training Club",
+                        tips: "تقوية العضلات تقلل الألم 80%",
+                        videos: "https://www.youtube.com/results?search_query=تقوية+عضلات+الظهر",
+                        articles: "https://www.physio.org.uk"
+                    },
+                    {
+                        title: "العلاج الحراري والتدليك",
+                        description: "الحرارة والتدليك يخفف الألم",
+                        steps: [
+                            "استخدم وسادة حرارية 15 دقيقة",
+                            "طلب تدليك من متخصص",
+                            "استخدم مرطب الشاشة",
+                            "جرّب الحمام الدافئ"
+                        ],
+                        examples: "كمادات دافئة، تدليك متخصص",
+                        tools: "وسادة حرارية كهربائية، كريم تدليك",
+                        tips: "الحرارة تحسن الدورة الدموية",
+                        videos: "https://www.youtube.com/results?search_query=العلاج+الحراري+للظهر",
+                        articles: "https://www.ncbi.nlm.nih.gov"
+                    },
+                    {
+                        title: "أخذ فترات راحة والحركة المنتظمة",
+                        description: "الجمود يزيد الألم",
+                        steps: [
+                            "خذ استراحة كل 30 دقيقة",
+                            "قف وتحرك قليلاً",
+                            "مارس تمارين خفيفة",
+                            "غير وضعيتك بانتظام"
+                        ],
+                        examples: "المشي 5 دقائق، تمدد خفيف",
+                        tools: "تطبيق Work Break Reminder",
+                        tips: "الحركة تقلل الجمود والألم",
+                        videos: "https://www.youtube.com/results?search_query=فترات+الراحة+والحركة",
+                        articles: "https://www.ergonomics.org"
+                    }
+                ]
+            },
+            7: {
+                title: "مشاكل البشرة والحب",
+                solutions: [
+                    {
+                        title: "تنظيف البشرة بشكل صحيح",
+                        description: "التنظيف الصحيح يزيل الأوساخ والبكتيريا",
+                        steps: [
+                            "نظف وجهك مرتين يومياً",
+                            "استخدم غسول مناسب لنوع بشرتك",
+                            "استخدم ماء دافئ وليس ساخن",
+                            "جفف وجهك بلطف"
+                        ],
+                        examples: "غسول لطيف، ماء دافئ، منديل نظيف",
+                        tools: "تطبيق SkinSight",
+                        tips: "عدم التنظيف الزائد يسبب جفاف",
+                        videos: "https://www.youtube.com/results?search_query=روتين+تنظيف+البشرة",
+                        articles: "https://www.dermatology.org"
+                    },
+                    {
+                        title: "ترطيب البشرة المنتظم",
+                        description: "ترطيب صحي يقلل الحب",
+                        steps: [
+                            "اختر مرطب مناسب لبشرتك",
+                            "طبق المرطب بعد التنظيف مباشرة",
+                            "استخدم مرطب بـ SPF في النهار",
+                            "ركز على المناطق الجافة"
+                        ],
+                        examples: "مرطب خفيف للبشرة الدهنية",
+                        tools: "تطبيق SkinCare Routines",
+                        tips: "الترطيب الصحيح يقلل الحب 40%",
+                        videos: "https://www.youtube.com/results?search_query=روتين+ترطيب+البشرة",
+                        articles: "https://www.skincare.org"
+                    },
+                    {
+                        title: "استخدام منتجات طبية موثوقة",
+                        description: "المنتجات المناسبة تعالج الحب",
+                        steps: [
+                            "استخدم مستحضرات بـ الساليسيليك أو البنزويل",
+                            "ابدأ بتركيز منخفض",
+                            "طبق على الحب مباشرة",
+                            "استخدم مستمراً حتى الشفاء"
+                        ],
+                        examples: "حمض الساليسيليك، بيروكسيد البنزويل",
+                        tools: "منتجات موثوقة من الصيدلية",
+                        tips: "النتائج تظهر بعد 4-6 أسابيع",
+                        videos: "https://www.youtube.com/results?search_query=علاجات+الحب+الفعالة",
+                        articles: "https://www.acne.org"
+                    },
+                    {
+                        title: "تحسين النظام الغذائي وتجنب المحفزات",
+                        description: "الطعام يؤثر على البشرة",
+                        steps: [
+                            "تجنب الدهون والمقليات",
+                            "قلل منتجات الألبان",
+                            "تناول الخضار والفاكهة",
+                            "اشرب الماء بكثرة"
+                        ],
+                        examples: "تناول سلطة، جزر، تفاح",
+                        tools: "تطبيق MyFitnessPal",
+                        tips: "الطعام الصحي يحسن البشرة 50%",
+                        videos: "https://www.youtube.com/results?search_query=الغذاء+والحب",
+                        articles: "https://www.ncbi.nlm.nih.gov"
+                    },
+                    {
+                        title: "الحفاظ على نظافة البيئة وتجنب اللمس",
+                        description: "البكتيريا تنتقل من الأيدي والملابس",
+                        steps: [
+                            "لا تلمس وجهك بأيدٍ غير نظيفة",
+                            "غير مكياجك ومنتجاتك القديمة",
+                            "نظف هاتفك وسماعات الأذن",
+                            "غير المخدة كل يومين"
+                        ],
+                        examples: "غسل اليدين قبل لمس الوجه",
+                        tools: "منديل نظيف، معقم",
+                        tips: "النظافة تقلل الحب 60%",
+                        videos: "https://www.youtube.com/results?search_query=نظافة+البشرة",
+                        articles: "https://www.dermatologyalliance.org"
+                    }
+                ]
+            },
+            8: {
+                title: "ضعف المناعة",
+                solutions: [
+                    {
+                        title: "تناول الفيتامينات والمعادن الأساسية",
+                        description: "الفيتامينات تقوي جهاز المناعة",
+                        steps: [
+                            "تناول فيتامين C يومياً",
+                            "تناول فيتامين D من الشمس",
+                            "استهلك الزنك والحديد",
+                            "استشر طبيب قبل المكملات"
+                        ],
+                        examples: "برتقال، لبن مدعم، محار",
+                        tools: "تطبيق Nutritionix",
+                        tips: "فيتامين C يقوي المناعة 70%",
+                        videos: "https://www.youtube.com/results?search_query=الفيتامينات+والمناعة",
+                        articles: "https://www.nih.gov"
+                    },
+                    {
+                        title: "الحصول على نوم كافٍ ومنتظم",
+                        description: "النوم يقوي المناعة",
+                        steps: [
+                            "نم 7-9 ساعات يومياً",
+                            "حافظ على جدول نوم منتظم",
+                            "تجنب السهر",
+                            "اجعل غرفتك مظلمة"
+                        ],
+                        examples: "جدول نوم ثابت حتى العطل",
+                        tools: "تطبيق Sleep Cycle",
+                        tips: "النوم يقوي المناعة 3 أضعاف",
+                        videos: "https://www.youtube.com/results?search_query=النوم+والمناعة",
+                        articles: "https://www.sleepfoundation.org"
+                    },
+                    {
+                        title: "ممارسة الرياضة المنتظمة",
+                        description: "التمارين تقوي المناعة",
+                        steps: [
+                            "مارس 150 دقيقة رياضة أسبوعياً",
+                            "مارس المشي أو الجري",
+                            "أضف تمارين القوة",
+                            "تجنب الإفراط في التمارين"
+                        ],
+                        examples: "مشي يومي 30 دقيقة",
+                        tools: "تطبيق Strava",
+                        tips: "الرياضة تقوي المناعة 50%",
+                        videos: "https://www.youtube.com/results?search_query=الرياضة+والمناعة",
+                        articles: "https://www.fitness.gov"
+                    },
+                    {
+                        title: "تناول الأطعمة الصحية الغنية بالمضادات",
+                        description: "الأطعمة الطبيعية تحتوي على مضادات",
+                        steps: [
+                            "تناول الثوم والزنجبيل",
+                            "أكل التوت والحمضيات",
+                            "استهلك الخضار الورقية",
+                            "شرب الشاي الأخضر"
+                        ],
+                        examples: "ثوم مطهو، عصير برتقال، شاي أخضر",
+                        tools: "قائمة وصفات صحية",
+                        tips: "الأطعمة الطبيعية تقوي بـ 80%",
+                        videos: "https://www.youtube.com/results?search_query=أطعمة+تقوي+المناعة",
+                        articles: "https://www.nutrition.org"
+                    },
+                    {
+                        title: "تقليل التوتر والقلق",
+                        description: "التوتر يضعف المناعة",
+                        steps: [
+                            "مارس التأمل واليوجا",
+                            "قضِ وقتاً في الطبيعة",
+                            "مارس تقنيات الاسترخاء",
+                            "تحدث عن مشاعرك"
+                        ],
+                        examples: "15 دقيقة يوجا يومياً",
+                        tools: "تطبيق Calm",
+                        tips: "تقليل التوتر يقوي المناعة 40%",
+                        videos: "https://www.youtube.com/results?search_query=التوتر+والمناعة",
+                        articles: "https://www.psychologytoday.com"
+                    }
+                ]
+            },
+            9: {
+                title: "مشاكل الجهاز الهضمي",
+                solutions: [
+                    {
+                        title: "زيادة استهلاك الألياف والماء",
+                        description: "الألياف والماء يحسنان الهضم",
+                        steps: [
+                            "اشرب 8 أكواب ماء يومياً",
+                            "أكل 25-30 جرام ألياف",
+                            "أضف الخضار والفاكهة",
+                            "استبدل الحبوب بالكاملة"
+                        ],
+                        examples: "تفاح، سلطة، خبز أسمر",
+                        tools: "تطبيق MyFitnessPal",
+                        tips: "الألياف تحسن الهضم 70%",
+                        videos: "https://www.youtube.com/results?search_query=الألياف+والهضم",
+                        articles: "https://www.gastro.org"
+                    },
+                    {
+                        title: "تناول وجبات منتظمة صغيرة",
+                        description: "وجبات صغيرة أسهل للهضم",
+                        steps: [
+                            "تناول 5-6 وجبات صغيرة",
+                            "تجنب الوجبات الكبيرة",
+                            "مضغ الطعام جيداً",
+                            "تناول ببطء"
+                        ],
+                        examples: "وجبة صغيرة كل 3-4 ساعات",
+                        tools: "مؤقت وجبات",
+                        tips: "الوجبات الصغيرة تقلل الانتفاخ",
+                        videos: "https://www.youtube.com/results?search_query=الوجبات+الصغيرة+والهضم",
+                        articles: "https://www.healthline.com"
+                    },
+                    {
+                        title: "تجنب الأطعمة المهيجة",
+                        description: "بعض الأطعمة تهيج المعدة",
+                        steps: [
+                            "تجنب الأطعمة الحارة والدهنية",
+                            "قلل منتجات الألبان",
+                            "تجنب الكافيين والكحول",
+                            "حدد محفزاتك الشخصية"
+                        ],
+                        examples: "تجنب الفلفل الحار، الشيكولاتة",
+                        tools: "دفتر تتبع الطعام",
+                        tips: "تجنب المهيجات يقلل الأعراض 80%",
+                        videos: "https://www.youtube.com/results?search_query=الأطعمة+المهيجة+للمعدة",
+                        articles: "https://www.digestivehealth.org"
+                    },
+                    {
+                        title: "ممارسة الرياضة والحركة",
+                        description: "الحركة تحسن الهضم",
+                        steps: [
+                            "مارس 30 دقيقة مشي يومياً",
+                            "حرك نفسك بعد الأكل",
+                            "تجنب الاستلقاء مباشرة",
+                            "مارس اليوجا الخفيفة"
+                        ],
+                        examples: "مشي بعد الغداء 15 دقيقة",
+                        tools: "تطبيق Nike Training Club",
+                        tips: "الحركة تحسن الهضم 50%",
+                        videos: "https://www.youtube.com/results?search_query=تمارين+الهضم",
+                        articles: "https://www.exerciseismedicine.org"
+                    },
+                    {
+                        title: "إدارة التوتر والاسترخاء",
+                        description: "التوتر يؤثر على الهضم",
+                        steps: [
+                            "مارس تمارين التنفس",
+                            "خذ فترات راحة",
+                            "مارس التأمل",
+                            "تجنب الأكل عند التوتر"
+                        ],
+                        examples: "10 دقائق تنفس عميق",
+                        tools: "تطبيق Calm",
+                        tips: "التوتر يسبب 50% من المشاكل",
+                        videos: "https://www.youtube.com/results?search_query=التوتر+والهضم",
+                        articles: "https://www.psychologytoday.com"
+                    }
+                ]
+            },
+            10: {
+                title: "ارتفاع ضغط الدم",
+                solutions: [
+                    {
+                        title: "تقليل الملح والصوديوم",
+                        description: "الملح يرفع ضغط الدم",
+                        steps: [
+                            "قلل ملح الطعام",
+                            "تجنب الأطعمة المعلبة",
+                            "اقرأ محتوى الصوديوم",
+                            "طهِ الطعام في البيت"
+                        ],
+                        examples: "أقل من 2300 ملغ صوديوم يومياً",
+                        tools: "تطبيق MyFitnessPal",
+                        tips: "تقليل الملح يخفض الضغط 5-8",
+                        videos: "https://www.youtube.com/results?search_query=الملح+وضغط+الدم",
+                        articles: "https://www.heart.org"
+                    },
+                    {
+                        title: "ممارسة الرياضة بانتظام",
+                        description: "التمارين تخفض ضغط الدم",
+                        steps: [
+                            "مارس 150 دقيقة أسبوعياً",
+                            "ابدأ بالمشي السريع",
+                            "أضف تمارين القوة",
+                            "تجنب الإفراط"
+                        ],
+                        examples: "30 دقيقة مشي سريع يومياً",
+                        tools: "تطبيق Strava",
+                        tips: "الرياضة تخفض الضغط 10-20 نقطة",
+                        videos: "https://www.youtube.com/results?search_query=تمارين+وضغط+الدم",
+                        articles: "https://www.fitness.gov"
+                    },
+                    {
+                        title: "خفض الوزن والحفاظ على وزن صحي",
+                        description: "الوزن الزائد يرفع الضغط",
+                        steps: [
+                            "قلل السعرات بـ 500",
+                            "مارس الرياضة",
+                            "تناول طعام صحي",
+                            "راقب وزنك"
+                        ],
+                        examples: "خسارة 5 كجم تخفض الضغط 2-10",
+                        tools: "تطبيق MyFitnessPal",
+                        tips: "كل كجم خسارة = انخفاض 1 ملغ",
+                        videos: "https://www.youtube.com/results?search_query=الوزن+وضغط+الدم",
+                        articles: "https://www.obesity.org"
+                    },
+                    {
+                        title: "تقليل الكافيين والكحول",
+                        description: "المنبهات ترفع الضغط مؤقتاً",
+                        steps: [
+                            "قلل القهوة",
+                            "تجنب الكحول",
+                            "استبدل بالماء",
+                            "قلل تدريجياً"
+                        ],
+                        examples: "كوب قهوة واحد فقط",
+                        tools: "تطبيق Track your intake",
+                        tips: "الكافيين يرفع الضغط مؤقتاً",
+                        videos: "https://www.youtube.com/results?search_query=الكافيين+وضغط+الدم",
+                        articles: "https://www.mayoclinic.org"
+                    },
+                    {
+                        title: "إدارة التوتر والاسترخاء",
+                        description: "التوتر يرفع ضغط الدم",
+                        steps: [
+                            "مارس اليوجا والتأمل",
+                            "خذ فترات راحة",
+                            "قضِ وقتاً في الطبيعة",
+                            "مارس التنفس العميق"
+                        ],
+                        examples: "15 دقيقة يوجا يومياً",
+                        tools: "تطبيق Calm",
+                        tips: "الاسترخاء يخفض الضغط 10 نقاط",
+                        videos: "https://www.youtube.com/results?search_query=إدارة+التوتر+وضغط+الدم",
+                        articles: "https://www.heart.org"
+                    }
+                ]
+            },
+            11: {
+                title: "مشاكل الذاكرة والتركيز",
+                solutions: [
+                    {
+                        title: "الحصول على نوم كافٍ وجودة عالية",
+                        description: "النوم يثبت الذاكرة",
+                        steps: [
+                            "نم 7-9 ساعات يومياً",
+                            "حافظ على جدول منتظم",
+                            "تجنب الشاشات قبل النوم",
+                            "اجعل غرفتك مظلمة"
+                        ],
+                        examples: "جدول نوم ثابت حتى العطل",
+                        tools: "تطبيق Sleep Cycle",
+                        tips: "النوم يحسن الذاكرة 40%",
+                        videos: "https://www.youtube.com/results?search_query=النوم+والذاكرة",
+                        articles: "https://www.sleepfoundation.org"
+                    },
+                    {
+                        title: "تمارين العقل والمهام المعرفية",
+                        description: "تمارين الذاكرة تقويها",
+                        steps: [
+                            "حل الألغاز والكلمات المتقاطعة",
+                            "لعب ألعاب الذاكرة",
+                            "تعلم مهارة جديدة",
+                            "اقرأ بنشاط"
+                        ],
+                        examples: "لعبة Lumosity، كتب تدريب الذاكرة",
+                        tools: "تطبيق Lumosity، تطبيق Duolingo",
+                        tips: "تمارين الذاكرة تحسنها 30%",
+                        videos: "https://www.youtube.com/results?search_query=تمارين+الذاكرة",
+                        articles: "https://www.cognitivescience.org"
+                    },
+                    {
+                        title: "التغذية الصحية الغنية بالعناصر",
+                        description: "الطعام الصحي يحسن الذاكرة",
+                        steps: [
+                            "تناول السمك والمكسرات",
+                            "أكل الخضار الورقية",
+                            "استهلك التوت والحمضيات",
+                            "شرب القهوة باعتدال"
+                        ],
+                        examples: "سلمون، جوز، توت أزرق",
+                        tools: "تطبيق MyFitnessPal",
+                        tips: "الأوميجا 3 تحسن الذاكرة 50%",
+                        videos: "https://www.youtube.com/results?search_query=غذاء+الذاكرة",
+                        articles: "https://www.nutrition.org"
+                    },
+                    {
+                        title: "ممارسة الرياضة والنشاط البدني",
+                        description: "الرياضة تحسن تدفق الدم للدماغ",
+                        steps: [
+                            "مارس 30 دقيقة يومياً",
+                            "اختر رياضة معتدلة",
+                            "المشي والسباحة ممتازة",
+                            "استمر بانتظام"
+                        ],
+                        examples: "المشي السريع 30 دقيقة يومياً",
+                        tools: "تطبيق Strava",
+                        tips: "الرياضة تحسن الذاكرة 35%",
+                        videos: "https://www.youtube.com/results?search_query=الرياضة+والذاكرة",
+                        articles: "https://www.exerciseismedicine.org"
+                    },
+                    {
+                        title: "إدارة التوتر والاسترخاء",
+                        description: "التوتر يؤثر على الذاكرة",
+                        steps: [
+                            "مارس التأمل",
+                            "خذ فترات راحة",
+                            "ركز على مهمة واحدة",
+                            "قلل المشتتات"
+                        ],
+                        examples: "15 دقيقة تأمل يومياً",
+                        tools: "تطبيق Calm",
+                        tips: "تقليل التوتر يحسن التركيز 50%",
+                        videos: "https://www.youtube.com/results?search_query=التوتر+والتركيز",
+                        articles: "https://www.psychologytoday.com"
+                    }
+                ]
+            },
+            12: {
+                title: "الإدمان والعادات السيئة",
+                solutions: [
+                    {
+                        title: "الإقلاع التدريجي والاستبدال",
+                        description: "الإقلاع التدريجي أسهل من المفاجئ",
+                        steps: [
+                            "قلل الكمية تدريجياً",
+                            "استبدل العادة بأخرى صحية",
+                            "حدد موعد للإقلاع",
+                            "اطلب الدعم"
+                        ],
+                        examples: "استبدل التدخين بالمضغ",
+                        tools: "تطبيق Smoke Free، Quitnow",
+                        tips: "الإقلاع التدريجي نسبة نجاح أعلى",
+                        videos: "https://www.youtube.com/results?search_query=الإقلاع+عن+التدخين",
+                        articles: "https://www.smokefree.gov"
+                    },
+                    {
+                        title: "طلب الدعم النفسي والاستشارة",
+                        description: "الدعم مهم جداً",
+                        steps: [
+                            "استشر معالج متخصص",
+                            "انضم لمجموعة دعم",
+                            "تحدث مع الأسرة والأصدقاء",
+                            "لا تخجل من طلب المساعدة"
+                        ],
+                        examples: "مجموعات إدمان مجهولة",
+                        tools: "تطبيق BetterHelp",
+                        tips: "الدعم يزيد نسبة النجاح 70%",
+                        videos: "https://www.youtube.com/results?search_query=مجموعات+الدعم+للإدمان",
+                        articles: "https://www.samhsa.gov"
+                    },
+                    {
+                        title: "تحسين نمط الحياة والنشاط",
+                        description: "نشاط جديد يحل محل العادة",
+                        steps: [
+                            "مارس رياضة تستمتع بها",
+                            "قضِ وقتاً مع أشخاص صحيين",
+                            "تعلم هوايات جديدة",
+                            "ابقَ مشغول الذهن"
+                        ],
+                        examples: "الجري، الرسم، كرة القدم",
+                        tools: "تطبيق Meetup",
+                        tips: "النشاط يقلل الرغبة بـ 60%",
+                        videos: "https://www.youtube.com/results?search_query=أنشطة+بديلة+للإدمان",
+                        articles: "https://www.addictioncenter.com"
+                    },
+                    {
+                        title: "تجنب المحفزات والمحيط السيء",
+                        description: "تجنب ما يحفزك يساعد",
+                        steps: [
+                            "حدد المحفزات والمواقف",
+                            "تجنب الأصدقاء السيئين",
+                            "غير بيئتك إن أمكن",
+                            "ركز على الأشخاص الإيجابيين"
+                        ],
+                        examples: "تجنب الأماكن والناس السيئة",
+                        tools: "دفتر تتبع المحفزات",
+                        tips: "تجنب المحفزات مهم جداً",
+                        videos: "https://www.youtube.com/results?search_query=تجنب+محفزات+الإدمان",
+                        articles: "https://www.ncbi.nlm.nih.gov"
+                    },
+                    {
+                        title: "العلاج الدوائي والمهني",
+                        description: "العلاج المتخصص يساعد",
+                        steps: [
+                            "استشر طبيب متخصص",
+                            "قد تحتاج لأدوية",
+                            "اتبع العلاج بانتظام",
+                            "لا تستسلم عند الفشل"
+                        ],
+                        examples: "أدوية الاستبدال، العلاج النفسي",
+                        tools: "مراكز علاج متخصصة",
+                        tips: "العلاج يزيد النجاح 80%",
+                        videos: "https://www.youtube.com/results?search_query=علاج+الإدمان+المهني",
+                        articles: "https://www.nih.gov"
+                    }
+                ]
+            },
+            13: {
+                title: "الاكتئاب والحزن المستمر",
+                solutions: [
+                    {
+                        title: "طلب المساعدة المهنية والعلاج",
+                        description: "العلاج المهني ضروري",
+                        steps: [
+                            "استشر طبيب نفسي",
+                            "قد تحتاج أدوية",
+                            "الالتزم بالعلاج",
+                            "لا تخجل من المساعدة"
+                        ],
+                        examples: "العلاج السلوكي المعرفي",
+                        tools: "تطبيق BetterHelp، عيادات نفسية",
+                        tips: "العلاج يساعد 80% من الحالات",
+                        videos: "https://www.youtube.com/results?search_query=علاج+الاكتئاب",
+                        articles: "https://www.nami.org"
+                    },
+                    {
+                        title: "ممارسة الرياضة والنشاط",
+                        description: "الرياضة تحسن المزاج",
+                        steps: [
+                            "مارس 30 دقيقة يومياً",
+                            "اختر رياضة تستمتع بها",
+                            "المشي والسباحة ممتازة",
+                            "مارس خارج البيت"
+                        ],
+                        examples: "المشي السريع في الطبيعة",
+                        tools: "تطبيق Strava",
+                        tips: "الرياضة تحسن المزاج 65%",
+                        videos: "https://www.youtube.com/results?search_query=الرياضة+والاكتئاب",
+                        articles: "https://www.mayoclinic.org"
+                    },
+                    {
+                        title: "التعرض للضوء الطبيعي والطبيعة",
+                        description: "الضوء والطبيعة تحسن المزاج",
+                        steps: [
+                            "اقضِ وقتاً في الشمس",
+                            "امشِ في الطبيعة يومياً",
+                            "تجنب البقاء داخل البيت",
+                            "افتح الستائر"
+                        ],
+                        examples: "15 دقيقة في الشمس يومياً",
+                        tools: "تطبيق Nature Sounds",
+                        tips: "الضوء يحسن المزاج 40%",
+                        videos: "https://www.youtube.com/results?search_query=الضوء+والاكتئاب",
+                        articles: "https://www.psychiatry.org"
+                    },
+                    {
+                        title: "بناء شبكة دعم اجتماعية",
+                        description: "الدعم الاجتماعي مهم",
+                        steps: [
+                            "تحدث مع الأصدقاء والعائلة",
+                            "لا تعزل نفسك",
+                            "انضم لمجموعات",
+                            "اطلب المساعدة عند الحاجة"
+                        ],
+                        examples: "عشاء مع الأصدقاء، مجموعات دعم",
+                        tools: "تطبيق Meetup",
+                        tips: "الدعم يقلل الاكتئاب 50%",
+                        videos: "https://www.youtube.com/results?search_query=الدعم+الاجتماعي",
+                        articles: "https://www.psychologytoday.com"
+                    },
+                    {
+                        title: "تحسين روتين النوم والتغذية",
+                        description: "النوم والغذاء مهمان",
+                        steps: [
+                            "نم 7-9 ساعات",
+                            "تناول طعام صحي",
+                            "تجنب الكافيين الكثير",
+                            "حافظ على جدول منتظم"
+                        ],
+                        examples: "إفطار صحي، نوم منتظم",
+                        tools: "تطبيق MyFitnessPal",
+                        tips: "النوم والطعام مهم للشفاء",
+                        videos: "https://www.youtube.com/results?search_query=النوم+والتغذية+والاكتئاب",
+                        articles: "https://www.healthline.com"
+                    }
+                ]
+            },
+            14: {
+                title: "مشاكل العمل والضغط الوظيفي",
+                solutions: [
+                    {
+                        title: "التواصل الفعال مع الزملاء والإدارة",
+                        description: "التواصل يحل الكثير من المشاكل",
+                        steps: [
+                            "تحدث بوضوح عن مشاكلك",
+                            "استمع للآخرين",
+                            "حل النزاعات بهدوء",
+                            "ابحث عن حلول مشتركة"
+                        ],
+                        examples: "اجتماع مع المدير لمناقشة الضغط",
+                        tools: "تطبيق Slack للتواصل",
+                        tips: "التواصل يقلل الضغط 40%",
+                        videos: "https://www.youtube.com/results?search_query=التواصل+الفعال+في+العمل",
+                        articles: "https://www.businessinsider.com"
+                    },
+                    {
+                        title: "تنظيم الوقت والأولويات",
+                        description: "التنظيم يقلل الضغط",
+                        steps: [
+                            "رتب أولوياتك",
+                            "ركز على المهام الهامة أولاً",
+                            "قل لا للمهام الإضافية",
+                            "خذ فترات راحة"
+                        ],
+                        examples: "استخدم مصفوفة الأولويات",
+                        tools: "تطبيق Todoist، تطبيق Asana",
+                        tips: "التنظيم يقلل الضغط 50%",
+                        videos: "https://www.youtube.com/results?search_query=إدارة+الوقت+بالعمل",
+                        articles: "https://www.asana.com"
+                    },
+                    {
+                        title: "أخذ فترات راحة منتظمة",
+                        description: "الراحة ضرورية",
+                        steps: [
+                            "خذ استراحة كل ساعة",
+                            "ابتعد عن المكتب",
+                            "امشِ قليلاً",
+                            "خذ إجازات منتظمة"
+                        ],
+                        examples: "استراحة 5 دقائق كل ساعة",
+                        tools: "تطبيق Work Break Reminder",
+                        tips: "الراحة تزيد الإنتاجية 25%",
+                        videos: "https://www.youtube.com/results?search_query=فترات+الراحة+في+العمل",
+                        articles: "https://www.huffpost.com"
+                    },
+                    {
+                        title: "الفصل بين الحياة الشخصية والعمل",
+                        description: "التوازن مهم جداً",
+                        steps: [
+                            "حدد ساعات عمل واضحة",
+                            "لا تعمل خارج الساعات",
+                            "أطفئ إشعارات العمل",
+                            "قضِ وقتاً مع الأسرة"
+                        ],
+                        examples: "عدم فتح البريد بعد الخمس",
+                        tools: "تطبيق Gmail Schedule Send",
+                        tips: "التوازن يقلل الإرهاق 60%",
+                        videos: "https://www.youtube.com/results?search_query=التوازن+بين+العمل+والحياة",
+                        articles: "https://www.forbes.com"
+                    },
+                    {
+                        title: "تطوير المهارات والنمو الوظيفي",
+                        description: "التطور يقلل الملل والضغط",
+                        steps: [
+                            "تعلم مهارات جديدة",
+                            "اطلب فرص تطور",
+                            "احضر دورات تدريبية",
+                            "ضع أهداف وظيفية"
+                        ],
+                        examples: "دورة تدريبية أونلاين",
+                        tools: "تطبيق Coursera، Udemy",
+                        tips: "التطور يزيد الرضا 70%",
+                        videos: "https://www.youtube.com/results?search_query=تطوير+المهارات+الوظيفية",
+                        articles: "https://www.linkedin.com/learning"
+                    }
+                ]
+            },
+            15: {
+                title: "الخجل والخوف الاجتماعي",
+                solutions: [
+                    {
+                        title: "التعريض التدريجي للمواقف الاجتماعية",
+                        description: "التعريض يقلل الخوف",
+                        steps: [
+                            "ابدأ بمواقف سهلة",
+                            "زد الصعوبة تدريجياً",
+                            "قف في الازدحام",
+                            "تحدث مع غريب"
+                        ],
+                        examples: "اذهب لمقهى وحدك أولاً",
+                        tools: "تطبيق Social Anxiety Coach",
+                        tips: "التعريض يقلل القلق 70%",
+                        videos: "https://www.youtube.com/results?search_query=علاج+الخوف+الاجتماعي",
+                        articles: "https://www.socialanxietyinstitute.org"
+                    },
+                    {
+                        title: "تطوير المهارات الاجتماعية",
+                        description: "المهارات تزيد الثقة",
+                        steps: [
+                            "تعلم فنون الحوار",
+                            "مارس الاستماع الفعال",
+                            "تعلم لغة الجسد",
+                            "مارس الكلام أمام الناس"
+                        ],
+                        examples: "نادي خطابة، دورة تواصل",
+                        tools: "تطبيق Toastmasters",
+                        tips: "المهارات تزيد الثقة 60%",
+                        videos: "https://www.youtube.com/results?search_query=مهارات+التواصل",
+                        articles: "https://www.psychologytoday.com"
+                    },
+                    {
+                        title: "العلاج السلوكي المعرفي",
+                        description: "تغيير الأفكار السلبية",
+                        steps: [
+                            "حدد الأفكار السلبية",
+                            "تحقق من صحتها",
+                            "استبدلها بإيجابية",
+                            "مارس التفكير الإيجابي"
+                        ],
+                        examples: "بدلاً من 'سيسخرون' قل 'لا أحد يهتم'",
+                        tools: "تطبيق Sanvello",
+                        tips: "تغيير الأفكار يقلل القلق 50%",
+                        videos: "https://www.youtube.com/results?search_query=العلاج+السلوكي+المعرفي",
+                        articles: "https://www.apa.org"
+                    },
+                    {
+                        title: "تقبل النقد والفشل",
+                        description: "قبول الفشل يقلل الخوف",
+                        steps: [
+                            "فهم أن الفشل طبيعي",
+                            "تعلم من الأخطاء",
+                            "لا تتخذ الانتقادات شخصياً",
+                            "ركز على التحسن"
+                        ],
+                        examples: "الأخطاء فرص للتعلم",
+                        tools: "كتب تطوير ذات",
+                        tips: "قبول الفشل يزيد الثقة 65%",
+                        videos: "https://www.youtube.com/results?search_query=تقبل+الفشل",
+                        articles: "https://www.brene.com"
+                    },
+                    {
+                        title: "بناء علاقات صحية وداعمة",
+                        description: "الدعم يزيد الثقة",
+                        steps: [
+                            "ابحث عن أصدقاء داعمين",
+                            "تقضِ وقتاً معهم",
+                            "اطلب الدعم عند الحاجة",
+                            "بادر بالمبادرات الاجتماعية"
+                        ],
+                        examples: "دعوة صديق لقهوة",
+                        tools: "تطبيق Meetup",
+                        tips: "الدعم يزيد الثقة 70%",
+                        videos: "https://www.youtube.com/results?search_query=بناء+العلاقات+الاجتماعية",
+                        articles: "https://www.psychologytoday.com"
+                    }
+                ]
+            },
+            16: {
+                title: "مشاكل العلاقات الشخصية",
+                solutions: [
+                    {
+                        title: "التواصل الصادق والاستماع الفعال",
+                        description: "التواصل أساس العلاقات",
+                        steps: [
+                            "تحدث بصراحة عن مشاعرك",
+                            "استمع بدون مقاطعة",
+                            "حاول فهم الطرف الآخر",
+                            "استخدم الكلمات اللطيفة"
+                        ],
+                        examples: "قل 'أشعر' بدلاً من 'أنت'",
+                        tools: "دفتر يوميات، كتب تواصل",
+                        tips: "التواصل يحسن العلاقة 80%",
+                        videos: "https://www.youtube.com/results?search_query=التواصل+في+العلاقات",
+                        articles: "https://www.psychologytoday.com"
+                    },
+                    {
+                        title: "حل الصراعات بطريقة بناءة",
+                        description: "الصراع طبيعي والحل مهم",
+                        steps: [
+                            "اختر الوقت المناسب",
+                            "ركز على المشكلة وليس الشخص",
+                            "ابحث عن حل يرضي الطرفين",
+                            "قم بالمصالحة"
+                        ],
+                        examples: "نقاش هادئ بدون غضب",
+                        tools: "تطبيق Lasting",
+                        tips: "حل الصراعات يقوي العلاقة",
+                        videos: "https://www.youtube.com/results?search_query=حل+الصراعات+في+العلاقات",
+                        articles: "https://www.gottman.com"
+                    },
+                    {
+                        title: "إظهار الحب والتقدير",
+                        description: "الحب يحتاج للتعبير",
+                        steps: [
+                            "عبر عن تقديرك يومياً",
+                            "قم بأعمال لطيفة",
+                            "استمع باهتمام",
+                            "قضِ وقتاً نوعياً معاً"
+                        ],
+                        examples: "رسالة صباح لطيفة، هدية صغيرة",
+                        tools: "تطبيق Lasting",
+                        tips: "التقدير يقوي الحب 60%",
+                        videos: "https://www.youtube.com/results?search_query=إظهار+الحب",
+                        articles: "https://www.psychologytoday.com"
+                    },
+                    {
+                        title: "الحفاظ على الاستقلالية والحدود الصحية",
+                        description: "الحدود صحية ضرورية",
+                        steps: [
+                            "حدد احتياجاتك الشخصية",
+                            "تقبل اختلاف الطرف الآخر",
+                            "احمِ وقتك الشخصي",
+                            "قل لا عند الضرورة"
+                        ],
+                        examples: "وقت شخصي مع الأصدقاء",
+                        tools: "دفتر يوميات",
+                        tips: "الحدود الصحية تقوي العلاقة",
+                        videos: "https://www.youtube.com/results?search_query=الحدود+الصحية+في+العلاقات",
+                        articles: "https://www.psychologytoday.com"
+                    },
+                    {
+                        title: "طلب المساعدة المهنية عند الحاجة",
+                        description: "الاستشارة مفيدة أحياناً",
+                        steps: [
+                            "استشر معالج أزواج",
+                            "اذهب معاً للجلسات",
+                            "كن صادقاً في الجلسات",
+                            "طبق ما تتعلمه"
+                        ],
+                        examples: "جلسات استشارة زوجية",
+                        tools: "تطبيق BetterHelp",
+                        tips: "الاستشارة تحسن العلاقة 70%",
+                        videos: "https://www.youtube.com/results?search_query=الاستشارة+الزوجية",
+                        articles: "https://www.gottman.com"
+                    }
+                ]
+            },
+            17: {
+                title: "قلة المعرفة والتعليم",
+                solutions: [
+                    {
+                        title: "الالتحاق بدورات تعليمية أونلاين",
+                        description: "التعليم الأونلاين متاح للجميع",
+                        steps: [
+                            "اختر منصة تعليمية",
+                            "ابحث عن الدورة المناسبة",
+                            "اقضِ وقتاً منتظماً",
+                            "أنهِ الدورة واحصل على شهادة"
+                        ],
+                        examples: "Coursera، Udemy، Edx",
+                        tools: "تطبيق Coursera",
+                        tips: "التعليم الأونلاين رخيص وسهل",
+                        videos: "https://www.youtube.com/results?search_query=الدورات+التعليمية+الأونلاين",
+                        articles: "https://www.coursera.org"
+                    },
+                    {
+                        title: "القراءة المنتظمة والمستمرة",
+                        description: "القراءة تزيد المعرفة",
+                        steps: [
+                            "قرأ 30 دقيقة يومياً",
+                            "ابدأ بكتب سهلة",
+                            "اختر مواضيع تهمك",
+                            "اكتب ملاحظات"
+                        ],
+                        examples: "كتب تطوير ذات، كتب علمية",
+                        tools: "تطبيق Kindle، Goodreads",
+                        tips: "القراءة تزيد المعرفة 40%",
+                        videos: "https://www.youtube.com/results?search_query=فوائد+القراءة",
+                        articles: "https://www.goodreads.com"
+                    },
+                    {
+                        title: "متابعة المدونات والمواقع التعليمية",
+                        description: "مواقع موثوقة توفر محتوى",
+                        steps: [
+                            "اختر مواقع موثوقة",
+                            "اقرأ بانتظام",
+                            "اشترك في النشرات البريدية",
+                            "شارك ما تتعلمه"
+                        ],
+                        examples: "مدونات تعليمية، مواقع ويكيبيديا",
+                        tools: "تطبيق Feedly",
+                        tips: "المتابعة المنتظمة تزيد المعرفة",
+                        videos: "https://www.youtube.com/results?search_query=المواقع+التعليمية",
+                        articles: "https://www.wikipedia.org"
+                    },
+                    {
+                        title: "الاستماع لبودكاست ومقاطع فيديو تعليمية",
+                        description: "محتوى سمعي وبصري",
+                        steps: [
+                            "ابحث عن بودكاست موثوق",
+                            "استمع أثناء العمل",
+                            "شاهد فيديوهات تعليمية",
+                            "طبق ما تتعلمه"
+                        ],
+                        examples: "TED Talks، بودكاست تعليمية",
+                        tools: "تطبيق Spotify، YouTube",
+                        tips: "الاستماع يسهل التعلم 50%",
+                        videos: "https://www.youtube.com/results?search_query=بودكاست+تعليمي",
+                        articles: "https://www.ted.com"
+                    },
+                    {
+                        title: "تطبيق المعرفة والممارسة",
+                        description: "الممارسة تثبت المعرفة",
+                        steps: [
+                            "طبق ما تتعلمه فوراً",
+                            "مارس المهارات الجديدة",
+                            "ادرس مع آخرين",
+                            "علم غيرك"
+                        ],
+                        examples: "مشروع عملي، تعليم صديق",
+                        tools: "دفتر ملاحظات",
+                        tips: "التطبيق يزيد الفهم 80%",
+                        videos: "https://www.youtube.com/results?search_query=تطبيق+المهارات",
+                        articles: "https://www.learning-sciences.org"
+                    }
+                ]
+            },
+            18: {
+                title: "مشاكل مالية واقتصادية",
+                solutions: [
+                    {
+                        title: "إنشاء ميزانية وتتبع الإنفاق",
+                        description: "الميزانية أساس التخطيط المالي",
+                        steps: [
+                            "احسب دخلك الشهري",
+                            "حدد نفقاتك",
+                            "ضع ميزانية واقعية",
+                            "تتبع إنفاقك"
+                        ],
+                        examples: "تطبيق YNAB، جدول Excel",
+                        tools: "تطبيق YNAB، تطبيق Mint",
+                        tips: "الميزانية توفر 20% من الدخل",
+                        videos: "https://www.youtube.com/results?search_query=إنشاء+ميزانية",
+                        articles: "https://www.nerdwallet.com"
+                    },
+                    {
+                        title: "تقليل الإنفاق وتجنب الديون",
+                        description: "الإنفاق الذكي يوفر أموال",
+                        steps: [
+                            "توقف عن الشراء غير الضروري",
+                            "قارن الأسعار",
+                            "تجنب الديون عالية الفائدة",
+                            "استخدم النقد بدل البطاقة"
+                        ],
+                        examples: "عدم شراء قهوة يومية يوفر 100$",
+                        tools: "تطبيق Personal Capital",
+                        tips: "تقليل الإنفاق يوفر 30%",
+                        videos: "https://www.youtube.com/results?search_query=تقليل+الإنفاق",
+                        articles: "https://www.daveramsey.com"
+                    },
+                    {
+                        title: "زيادة الدخل والبحث عن فرص",
+                        description: "دخل إضافي يحل المشاكل",
+                        steps: [
+                            "ابحث عن عمل جانبي",
+                            "بيع أشياء لا تحتاجها",
+                            "تطوير مهارات تحصل عليها أجر",
+                            "طلب زيادة راتب"
+                        ],
+                        examples: "عمل حر أونلاين، بيع أونلاين",
+                        tools: "تطبيق Fiverr، Upwork",
+                        tips: "دخل إضافي يحسن الوضع كثيراً",
+                        videos: "https://www.youtube.com/results?search_query=زيادة+الدخل",
+                        articles: "https://www.sidehustlelist.com"
+                    },
+                    {
+                        title: "بناء صندوق طوارئ",
+                        description: "الادخار للطوارئ مهم",
+                        steps: [
+                            "ادخر 3-6 أشهر من المصاريف",
+                            "ضع المال في حساب منفصل",
+                            "لا تستخدمه إلا للضرورة",
+                            "أضف إليه تدريجياً"
+                        ],
+                        examples: "صندوق طوارئ = 3 أشهر راتب",
+                        tools: "حساب بنكي",
+                        tips: "صندوق الطوارئ يقلل القلق",
+                        videos: "https://www.youtube.com/results?search_query=بناء+صندوق+طوارئ",
+                        articles: "https://www.investopedia.com"
+                    },
+                    {
+                        title: "الاستثمار والتعليم المالي",
+                        description: "الاستثمار يزيد الثروة",
+                        steps: [
+                            "تعلم عن الاستثمار",
+                            "ابدأ بمبلغ صغير",
+                            "استثمر في صناديق منخفضة المخاطر",
+                            "استشر مستشار مالي"
+                        ],
+                        examples: "صناديق الاستثمار، الأسهم",
+                        tools: "تطبيق Robinhood، تطبيق Investing",
+                        tips: "الاستثمار يزيد الثروة 7 أضعاف",
+                        videos: "https://www.youtube.com/results?search_query=الاستثمار+للمبتدئين",
+                        articles: "https://www.investopedia.com"
+                    }
+                ]
+            },
+            19: {
+                title: "إدارة الوقت والتأخر",
+                solutions: [
+                    {
+                        title: "تحديد الأولويات واستخدام قوائم المهام",
+                        description: "الأولويات توضح ما يجب فعله",
+                        steps: [
+                            "اكتب جميع مهامك",
+                            "صنفها حسب الأهمية",
+                            "ركز على المهم أولاً",
+                            "اشطب المهام المنجزة"
+                        ],
+                        examples: "استخدام مصفوفة أيزنهاور",
+                        tools: "تطبيق Todoist، تطبيق Asana",
+                        tips: "الأولويات توفر 50% من الوقت",
+                        videos: "https://www.youtube.com/results?search_query=تحديد+الأولويات",
+                        articles: "https://www.asana.com"
+                    },
+                    {
+                        title: "تقسيم المهام الكبيرة للأجزاء الصغيرة",
+                        description: "المهام الصغيرة أسهل للإنجاز",
+                        steps: [
+                            "قسّم المشروع لخطوات",
+                            "أنجز خطوة واحدة في المرة",
+                            "احتفل بكل إنجاز",
+                            "قدّر الوقت لكل خطوة"
+                        ],
+                        examples: "مشروع كبير = 10 خطوات صغيرة",
+                        tools: "تطبيق Trello",
+                        tips: "التقسيم يقلل المماطلة 70%",
+                        videos: "https://www.youtube.com/results?search_query=تقسيم+المهام",
+                        articles: "https://www.lifehack.org"
+                    },
+                    {
+                        title: "تجنب المشتتات والتركيز العميق",
+                        description: "التركيز يزيد الإنتاجية",
+                        steps: [
+                            "أطفئ الإشعارات",
+                            "ركز على مهمة واحدة",
+                            "مارس 25 دقيقة تركيز",
+                            "خذ راحة 5 دقائق"
+                        ],
+                        examples: "تقنية البوموودورو",
+                        tools: "تطبيق Forest، تطبيق Focus",
+                        tips: "التركيز يزيد الإنتاجية 40%",
+                        videos: "https://www.youtube.com/results?search_query=تقنية+البومودورو",
+                        articles: "https://www.pomodorotechnique.com"
+                    },
+                    {
+                        title: "التخطيط المسبق والجدولة",
+                        description: "التخطيط يمنع التأخر",
+                        steps: [
+                            "خطط يومك قبل النوم",
+                            "حدد أوقات البداية والنهاية",
+                            "أضف وقت طارئ",
+                            "اتبع الجدول"
+                        ],
+                        examples: "جدول يومي مكتوب",
+                        tools: "تطبيق Google Calendar",
+                        tips: "التخطيط يقلل التأخر 60%",
+                        videos: "https://www.youtube.com/results?search_query=تخطيط+اليوم",
+                        articles: "https://www.timeanddate.com"
+                    },
+                    {
+                        title: "بدء العمل مبكراً والعادات الصباحية",
+                        description: "البداية المبكرة تحسن الإنتاجية",
+                        steps: [
+                            "استيقظ مبكراً",
+                            "قم بعادات صباحية منتظمة",
+                            "ابدأ بأهم مهمة",
+                            "حافظ على الروتين"
+                        ],
+                        examples: "الاستيقاظ الساعة 6 صباحاً",
+                        tools: "تطبيق Sleep Cycle",
+                        tips: "البداية المبكرة تزيد الإنتاجية 30%",
+                        videos: "https://www.youtube.com/results?search_query=عادات+صباحية",
+                        articles: "https://www.themirrormagazine.com"
+                    }
+                ]
+            },
+            20: {
+                title: "الإدمان على وسائل التواصل",
+                solutions: [
+                    {
+                        title: "تحديد أوقات محددة للاستخدام",
+                        description: "الحد من الوقت يقلل الإدمان",
+                        steps: [
+                            "حدد ساعة واحدة يومياً",
+                            "استخدمها في أوقات محددة",
+                            "اطفئ الإشعارات",
+                            "قلل الوقت تدريجياً"
+                        ],
+                        examples: "استخدام الهاتف بعد الـ 7 مساءً فقط",
+                        tools: "تطبيق Screen Time، Digital Wellbeing",
+                        tips: "تحديد الوقت يقلل الإدمان 70%",
+                        videos: "https://www.youtube.com/results?search_query=تقليل+استخدام+الهاتف",
+                        articles: "https://www.timewellspent.io"
+                    },
+                    {
+                        title: "إزالة التطبيقات والإشعارات",
+                        description: "بدون تطبيقات = بدون إغراء",
+                        steps: [
+                            "احذف التطبيقات من الهاتف",
+                            "أطفئ جميع الإشعارات",
+                            "استخدمها عبر الويب فقط",
+                            "قلل وقت البحث"
+                        ],
+                        examples: "حذف تطبيق إنستجرام من الهاتف",
+                        tools: "إعدادات الهاتف",
+                        tips: "عدم وجود التطبيق يقلل الإدمان 80%",
+                        videos: "https://www.youtube.com/results?search_query=حذف+التطبيقات",
+                        articles: "https://www.centerforrealisticmedicine.org"
+                    },
+                    {
+                        title: "البحث عن أنشطة بديلة",
+                        description: "نشاط جديد يحل محل القديم",
+                        steps: [
+                            "جد هواية تستمتع بها",
+                            "مارس الرياضة",
+                            "اقضِ وقتاً مع الأسرة",
+                            "اقرأ كتب"
+                        ],
+                        examples: "الرياضة، الرسم، القراءة",
+                        tool: "تطبيق Meetup",
+                        tips: "نشاط جديد يقلل الإدمان 60%",
+                        videos: "https://www.youtube.com/results?search_query=أنشطة+بديلة+للتواصل",
+                        articles: "https://www.psychologytoday.com"
+                    },
+                    {
+                        title: "تغيير البيئة والعادات",
+                        description: "البيئة تؤثر على السلوك",
+                        steps: [
+                            "لا تأخذ الهاتف للفراش",
+                            "ضع الهاتف بعيداً عن مكتبك",
+                            "غير روتينك الصباحي",
+                            "قضِ الوقت بعيداً عن الشاشات"
+                        ],
+                        examples: "ترك الهاتف في غرفة أخرى",
+                        tools: "صندوق بدون تكنولوجيا",
+                        tips: "تغيير البيئة يقلل الإدمان 50%",
+                        videos: "https://www.youtube.com/results?search_query=رقمي+الانقطاع",
+                        articles: "https://www.cnet.com"
+                    },
+                    {
+                        title: "طلب الدعم والمساعدة",
+                        description: "الدعم يساعد في التغيير",
+                        steps: [
+                            "خبر أصدقاؤك بنيتك",
+                            "طلب منهم دعمك",
+                            "انضم لمجموعة دعم",
+                            "استشر متخصص إن لزم"
+                        ],
+                        examples: "طلب من صديق مساعدتك",
+                        tools: "تطبيق Reddit، مجموعات دعم",
+                        tips: "الدعم يزيد نجاح التغيير 65%",
+                        videos: "https://www.youtube.com/results?search_query=الإدمان+على+الهاتف",
+                        articles: "https://www.psychologytoday.com"
+                    }
+                ]
+            }
+        };
+
+        let currentUser = null;
+
+        const app = {
+            render() {
+                const root = document.getElementById('app');
+                
+                if (!currentUser) {
+                    root.innerHTML = this.loginPage();
+                } else if (window.currentProblemId) {
+                    root.innerHTML = this.solutionsPage();
+                } else {
+                    root.innerHTML = this.problemsPage();
+                }
+                
+                this.attachEventListeners();
+            },
+
+            loginPage() {
+                return `
+                    <div class="ocean-bg min-h-screen flex items-center justify-center p-4">
+                        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md fade-in">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">🚀</div>
+                                <h1 class="text-3xl font-bold text-gray-800">Ultra Pro</h1>
+                                <p class="text-gray-600 text-sm mt-2">منصة الحلول المتطورة</p>
+                            </div>
+                            
+                            <form id="loginForm" class="space-y-6">
+                                <div>
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        placeholder="أدخل اسمك"
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 transition"
+                                        required
+                                    />
+                                </div>
+                                
+                                <button
+                                    type="submit"
+                                    class="success-btn text-white w-full py-3 rounded-lg font-bold text-lg btn-hover"
+                                >
+                                    دخول المنصة
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            },
+
+            problemsPage() {
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+                        <div class="header-shadow bg-white sticky top-0 z-10">
+                            <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
+                                <div>
+                                    <h1 class="text-3xl font-bold text-gray-800">🚀 Ultra Pro</h1>
+                                    <p class="text-gray-600 text-sm">منصة الحلول المتطورة</p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-gray-700 font-bold">أهلاً ${currentUser}</p>
+                                    <button id="logoutBtn" class="mt-2 bg-red-500 text-white px-4 py-2 rounded-lg btn-hover text-sm">
+                                        تسجيل الخروج
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="max-w-7xl mx-auto px-4 py-12">
+                            <div class="text-center mb-12">
+                                <h2 class="text-4xl font-bold text-gray-800 mb-4">اختر المشكلة التي تواجهك</h2>
+                                <p class="text-gray-600 text-lg">20 مشكلة شائعة مع حلول متعددة لكل منها</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in">
+                                ${problems.map(problem => `
+                                    <div class="problem-card card-hover cursor-pointer overflow-hidden" onclick="window.selectProblem(${problem.id})">
+                                        <div class="${problem.color} h-20 flex items-center justify-center">
+                                            <i class="fas ${problem.icon} text-white text-4xl"></i>
+                                        </div>
+                                        <div class="p-6">
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">${problem.title}</h3>
+                                            <p class="text-gray-600 text-sm">${problem.description}</p>
+                                            <div class="mt-4 text-indigo-600 font-semibold flex items-center justify-between">
+                                                <span>اعرف الحلول</span>
+                                                <i class="fas fa-arrow-left"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            solutionsPage() {
+                const problemData = solutions[window.currentProblemId];
+                const problem = problems.find(p => p.id === window.currentProblemId);
+
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+                        <div class="header-shadow bg-white sticky top-0 z-10">
+                            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                                <button id="backBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg btn-hover flex items-center gap-2">
+                                    <i class="fas fa-arrow-right"></i> العودة
+                                </button>
+                                <h1 class="text-2xl font-bold text-gray-800">🚀 Ultra Pro</h1>
+                                <button id="logoutBtn2" class="bg-red-500 text-white px-4 py-2 rounded-lg btn-hover text-sm">
+                                    تسجيل الخروج
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="max-w-5xl mx-auto px-4 py-12">
+                            <div class="text-center mb-12 fade-in">
+                                <div class="inline-block ${problem.color} p-6 rounded-full mb-4">
+                                    <i class="fas ${problem.icon} text-white text-5xl"></i>
+                                </div>
+                                <h2 class="text-4xl font-bold text-gray-800 mb-3">${problemData.title}</h2>
+                                <p class="text-gray-600 text-lg">5+ حلول مفصلة لحل هذه المشكلة</p>
+                            </div>
+
+                            <div class="space-y-8 solution-list fade-in">
+                                ${problemData.solutions.map((solution, index) => `
+                                    <div class="solution-item bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition">
+                                        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
+                                            <div class="flex items-center gap-4">
+                                                <div class="bg-white bg-opacity-20 w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                                                    ${index + 1}
+                                                </div>
+                                                <h3 class="text-2xl font-bold text-white">${solution.title}</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-8 space-y-6">
+                                            <div>
+                                                <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                                    <i class="fas fa-lightbulb text-yellow-500"></i>
+                                                    الشرح المفصل
+                                                </h4>
+                                                <p class="text-gray-700 leading-relaxed">${solution.description}</p>
+                                            </div>
+
+                                            <div>
+                                                <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                                    <i class="fas fa-tasks text-blue-500"></i>
+                                                    خطوات عملية
+                                                </h4>
+                                                <ol class="space-y-2">
+                                                    ${solution.steps.map((step, i) => `
+                                                        <li class="flex gap-3 text-gray-700">
+                                                            <span class="font-bold text-indigo-600">${i + 1}.</span>
+                                                            <span>${step}</span>
+                                                        </li>
+                                                    `).join('')}
+                                                </ol>
+                                            </div>
+
+                                            <div>
+                                                <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                                    <i class="fas fa-star text-yellow-400"></i>
+                                                    مثال واقعي
+                                                </h4>
+                                                <div class="bg-blue-50 border-r-4 border-blue-500 p-4 rounded">
+                                                    <p class="text-gray-700">${solution.examples}</p>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                                    <i class="fas fa-tools text-green-500"></i>
+                                                    أدوات وتطبيقات مساعدة
+                                                </h4>
+                                                <div class="bg-green-50 border-r-4 border-green-500 p-4 rounded">
+                                                    <p class="text-gray-700">${solution.tools}</p>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                                    <i class="fas fa-shield-alt text-purple-500"></i>
+                                                    نصائح لتجنب المشكلة
+                                                </h4>
+                                                <div class="bg-purple-50 border-r-4 border-purple-500 p-4 rounded">
+                                                    <p class="text-gray-700">${solution.tips}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                                                <a href="${solution.videos}" target="_blank" rel="noopener noreferrer" class="video-link text-white px-6 py-3 rounded-lg font-bold flex items-center justify-center gap-2 btn-hover">
+                                                    <i class="fab fa-youtube"></i>
+                                                    فيديوهات YouTube
+                                                </a>
+                                                <a href="${solution.articles}" target="_blank" rel="noopener noreferrer" class="article-link text-white px-6 py-3 rounded-lg font-bold flex items-center justify-center gap-2 btn-hover">
+                                                    <i class="fas fa-book"></i>
+                                                    مقالات وموارد
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            attachEventListeners() {
+                const loginForm = document.getElementById('loginForm');
+                const backBtn = document.getElementById('backBtn');
+                const logoutBtns = document.querySelectorAll('#logoutBtn, #logoutBtn2');
+
+                if (loginForm) {
+                    loginForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const username = document.getElementById('username').value.trim();
+                        if (username) {
+                            currentUser = username;
+                            this.render();
+                        }
+                    });
+                }
+
+                if (backBtn) {
+                    backBtn.addEventListener('click', () => {
+                        window.currentProblemId = null;
+                        this.render();
+                    });
+                }
+
+                logoutBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        currentUser = null;
+                        window.currentProblemId = null;
+                        this.render();
+                    });
+                });
+            }
+        };
+
+        window.selectProblem = (id) => {
+            window.currentProblemId = id;
+            app.render();
+        };
+
+        app.render();
+    </script>
+</body>
+</html>
